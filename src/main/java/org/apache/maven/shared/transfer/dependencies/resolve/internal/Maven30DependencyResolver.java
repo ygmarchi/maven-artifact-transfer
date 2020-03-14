@@ -19,12 +19,6 @@ package org.apache.maven.shared.transfer.dependencies.resolve.internal;
  * under the License.
  */
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.maven.RepositoryUtils;
 import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
@@ -48,6 +42,12 @@ import org.sonatype.aether.resolution.ArtifactResolutionException;
 import org.sonatype.aether.resolution.ArtifactResult;
 import org.sonatype.aether.util.artifact.DefaultArtifact;
 import org.sonatype.aether.util.artifact.DefaultArtifactType;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 
@@ -89,7 +89,9 @@ class Maven30DependencyResolver
         return resolveDependencies( dependencyFilter, request );
     }
 
-    private static final Class<?>[] ARG_CLASSES = new Class<?>[] {org.apache.maven.model.Dependency.class, ArtifactTypeRegistry.class};
+    private static final Class<?>[] ARG_CLASSES = new Class<?>[] {
+            org.apache.maven.model.Dependency.class, ArtifactTypeRegistry.class
+    };
 
     private ArtifactTypeRegistry createTypeRegistry() throws DependencyResolverException
     {

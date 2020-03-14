@@ -19,12 +19,6 @@ package org.apache.maven.shared.transfer.dependencies.resolve.internal;
  * under the License.
  */
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.maven.RepositoryUtils;
 import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
@@ -49,7 +43,12 @@ import org.eclipse.aether.resolution.ArtifactResult;
 import org.eclipse.aether.resolution.DependencyRequest;
 import org.eclipse.aether.resolution.DependencyResolutionException;
 import org.eclipse.aether.resolution.DependencyResult;
-import org.sonatype.aether.resolution.ArtifactResolutionException;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 
@@ -91,7 +90,9 @@ class Maven31DependencyResolver
         return resolveDependencies( dependencyFilter, request );
     }
 
-    private static final Class<?>[] ARG_CLASSES = new Class<?>[] {org.apache.maven.model.Dependency.class, ArtifactTypeRegistry.class};
+    private static final Class<?>[] ARG_CLASSES = new Class<?>[] {
+            org.apache.maven.model.Dependency.class, ArtifactTypeRegistry.class
+    };
 
     private ArtifactTypeRegistry createTypeRegistry() throws DependencyResolverException
     {
@@ -138,8 +139,7 @@ class Maven31DependencyResolver
      * @throws DependencyResolverException in case of a failure of the typeRegistry error.
      */
     // CHECKSTYLE_OFF: LineLength
-    private List<Dependency> resolveDependencies(Collection<org.apache.maven.model.Dependency> mavenDependencies) throws
-            DependencyResolverException
+    private List<Dependency> resolveDependencies( Collection<org.apache.maven.model.Dependency> mavenDependencies ) throws DependencyResolverException
     // CHECKSTYLE_ON: LineLength
     {
         if ( mavenDependencies == null )
