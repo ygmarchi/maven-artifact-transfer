@@ -58,11 +58,11 @@ class Maven30DependencyResolver
     private final RepositorySystem repositorySystem;
 
     private final ArtifactHandlerManager artifactHandlerManager;
-    
+
     private final RepositorySystemSession session;
-    
+
     private final List<RemoteRepository> aetherRepositories;
-    
+
     Maven30DependencyResolver( RepositorySystem repositorySystem, ArtifactHandlerManager artifactHandlerManager,
                                       RepositorySystemSession session, List<RemoteRepository> aetherRepositories )
     {
@@ -88,7 +88,15 @@ class Maven30DependencyResolver
 
         return resolveDependencies( dependencyFilter, request );
     }
-    
+
+    private static final Class<?>[] ARG_CLASSES = new Class<?>[] {org.apache.maven.model.Dependency.class, ArtifactTypeRegistry.class};
+
+    private ArtifactTypeRegistry createTypeRegistry() throws DependencyResolverException
+    {
+        return (ArtifactTypeRegistry) Invoker.invoke( RepositoryUtils.class, "newArtifactTypeRegistry",
+                ArtifactHandlerManager.class, artifactHandlerManager );
+    }
+
     @Override
     // CHECKSTYLE_OFF: LineLength
     public Iterable<org.apache.maven.shared.transfer.artifact.resolve.ArtifactResult> resolveDependencies( Model model,
@@ -108,11 +116,9 @@ class Maven30DependencyResolver
         
         CollectRequest request = new CollectRequest( aetherRoot, aetherRepositories );
 
-        List<org.apache.maven.model.Dependency> dependencies = model.getDependencies();
-        if ( dependencies != null )
+        if ( model.getDependencies() != null )
         {
-            List<Dependency> aetherDependencies = resolveDependencies( dependencies );
-            request.setDependencies( aetherDependencies );
+            request.setDependencies( resolveDependencies( model.getDependencies() ) );
         }
 
         DependencyManagement mavenDependencyManagement = model.getDependencyManagement();
@@ -122,15 +128,6 @@ class Maven30DependencyResolver
         }
 
         return resolveDependencies( dependencyFilter, request );
-    }
-
-    private static final Class<?>[] ARG_CLASSES =
-            new Class<?>[] { org.apache.maven.model.Dependency.class, ArtifactTypeRegistry.class };
-
-    private ArtifactTypeRegistry createTypeRegistry() throws DependencyResolverException
-    {
-        return  (ArtifactTypeRegistry) Invoker.invoke( RepositoryUtils.class,
-            "newArtifactTypeRegistry", ArtifactHandlerManager.class, artifactHandlerManager );
     }
 
     /**
@@ -204,8 +201,8 @@ class Maven30DependencyResolver
                 public Iterator<org.apache.maven.shared.transfer.artifact.resolve.ArtifactResult> iterator()
                 {
                     // CHECKSTYLE_OFF: LineLength
-                    Collection<org.apache.maven.shared.transfer.artifact.resolve.ArtifactResult> artResults =
-                        new ArrayList<org.apache.maven.shared.transfer.artifact.resolve.ArtifactResult>( dependencyResults.size() );
+                    Collection<org.apache.maven.shared.transfer.artifact.resolve.ArtifactResult> artResults = new ArrayList<>(
+                            dependencyResults.size() );
                     // CHECKSTYLE_ON: LineLength
                     
                     for ( ArtifactResult artifactResult : dependencyResults )
@@ -229,9 +226,9 @@ class Maven30DependencyResolver
 
     /**
      * Based on RepositoryUtils#toDependency(org.apache.maven.model.Dependency, ArtifactTypeRegistry)
-     * 
-     * @param coordinate
-     * @param stereotypes
+     *
+     * @param coordinate {@link DependableCoordinate}
+     * @param stereotypes {@link org.eclipse.aether.artifact.ArtifactTypeRegistry
      * @return as Aether Dependency
      */
     private static Dependency toDependency( DependableCoordinate coordinate, ArtifactTypeRegistry stereotypes )
