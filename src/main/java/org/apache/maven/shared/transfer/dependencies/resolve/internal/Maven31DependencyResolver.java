@@ -96,7 +96,7 @@ class Maven31DependencyResolver
 
     private ArtifactTypeRegistry createTypeRegistry() throws DependencyResolverException
     {
-        return (ArtifactTypeRegistry) Invoker.invoke( RepositoryUtils.class, "newArtifactTypeRegistry",
+        return Invoker.invoke( RepositoryUtils.class, "newArtifactTypeRegistry",
                 ArtifactHandlerManager.class, artifactHandlerManager );
     }
 
@@ -249,6 +249,6 @@ class Maven31DependencyResolver
     {
         Object[] args = new Object[] { root, typeRegistry };
 
-        return (Dependency) Invoker.invoke( RepositoryUtils.class, "toDependency", ARG_CLASSES, args );
+        return Invoker.invoke( RepositoryUtils.class, "toDependency", ARG_CLASSES, args );
     }    
 }

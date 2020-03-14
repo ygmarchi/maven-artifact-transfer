@@ -33,10 +33,10 @@ final class Invoker
         // do not instantiate
     }
 
-    public static Object invoke( Object object, String method )
+    public static <T> T invoke( Object object, String method )
         throws DependencyResolverException
     {
-        return invoke( object.getClass(), object, method );
+        return (T) invoke( object.getClass(), object, method );
     }
 
     public static Object invoke( Class<?> objectClazz, Object object, String method )
@@ -82,12 +82,12 @@ final class Invoker
         }
     }
 
-    public static Object invoke( Class<?> objectClazz, String staticMethod, Class<?> argClazz, Object arg )
+    public static <T> T invoke( Class<?> objectClazz, String staticMethod, Class<?> argClazz, Object arg )
         throws DependencyResolverException
     {
         try
         {
-            return objectClazz.getMethod( staticMethod, argClazz ).invoke( null, arg );
+            return (T) objectClazz.getMethod( staticMethod, argClazz ).invoke( null, arg );
         }
         catch ( IllegalAccessException e )
         {
@@ -113,12 +113,12 @@ final class Invoker
      * @return the result of the method invocation
      * @throws DependencyResolverException if any checked exception occurs
      */
-    public static Object invoke( Class<?> objectClazz, String staticMethod, Class<?>[] argClasses, Object[] args )
+    public static <T> T invoke( Class<?> objectClazz, String staticMethod, Class<?>[] argClasses, Object[] args )
         throws DependencyResolverException
     {
         try
         {
-            return objectClazz.getMethod( staticMethod, argClasses ).invoke( null, args );
+            return (T) objectClazz.getMethod( staticMethod, argClasses ).invoke( null, args );
         }
         catch ( IllegalAccessException e )
         {
