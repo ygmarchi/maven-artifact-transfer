@@ -119,10 +119,7 @@ class Maven31DependencyResolver
         
         CollectRequest request = new CollectRequest( aetherRoot, aetherRepositories );
 
-        if ( model.getDependencies() != null )
-        {
-            request.setDependencies( resolveDependencies( model.getDependencies() ) );
-        }
+        request.setDependencies( resolveDependencies( model.getDependencies() ) );
 
         DependencyManagement mavenDependencyManagement = model.getDependencyManagement();
         if ( mavenDependencyManagement != null )
