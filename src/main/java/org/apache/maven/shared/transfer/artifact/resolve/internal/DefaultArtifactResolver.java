@@ -142,14 +142,11 @@ class DefaultArtifactResolver
             org.eclipse.aether.RepositorySystem repositorySystem =
                             container.lookup( org.eclipse.aether.RepositorySystem.class );
             
-            @SuppressWarnings( "unchecked" )
-            List<org.eclipse.aether.repository.RemoteRepository> aetherRepositories =
-                (List<org.eclipse.aether.repository.RemoteRepository>) Invoker.invoke( RepositoryUtils.class, "toRepos",
-                                                                           List.class,
-                                                                           buildingRequest.getRemoteRepositories() );
+            List<org.eclipse.aether.repository.RemoteRepository> aetherRepositories = Invoker.invoke( RepositoryUtils.class, "toRepos",
+                                                                       List.class,
+                                                                       buildingRequest.getRemoteRepositories() );
 
-            org.eclipse.aether.RepositorySystemSession session =
-                (org.eclipse.aether.RepositorySystemSession) Invoker.invoke( buildingRequest, "getRepositorySession" );
+            org.eclipse.aether.RepositorySystemSession session = Invoker.invoke( buildingRequest, "getRepositorySession" );
             
             return new Maven31ArtifactResolver( repositorySystem, aetherRepositories, session );
             
@@ -159,14 +156,11 @@ class DefaultArtifactResolver
             org.sonatype.aether.RepositorySystem repositorySystem =
                             container.lookup( org.sonatype.aether.RepositorySystem.class );
             
-            @SuppressWarnings( "unchecked" )
-            List<org.sonatype.aether.repository.RemoteRepository> aetherRepositories =
-                (List<org.sonatype.aether.repository.RemoteRepository>) Invoker.invoke( RepositoryUtils.class,
-                                                                            "toRepos", List.class,
-                                                                            buildingRequest.getRemoteRepositories() );
+            List<org.sonatype.aether.repository.RemoteRepository> aetherRepositories = Invoker.invoke( RepositoryUtils.class,
+                                                                        "toRepos", List.class,
+                                                                        buildingRequest.getRemoteRepositories() );
 
-            org.sonatype.aether.RepositorySystemSession session =
-                (org.sonatype.aether.RepositorySystemSession) Invoker.invoke( buildingRequest, "getRepositorySession" );
+            org.sonatype.aether.RepositorySystemSession session = Invoker.invoke( buildingRequest, "getRepositorySession" );
             
             return new Maven30ArtifactResolver( repositorySystem, aetherRepositories, session );
         }

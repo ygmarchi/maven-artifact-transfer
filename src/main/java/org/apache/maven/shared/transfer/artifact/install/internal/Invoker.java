@@ -33,18 +33,18 @@ final class Invoker
         // do not instantiate
     }
 
-    public static Object invoke( Object object, String method )
+    public static <T> T invoke( Object object, String method )
         throws ArtifactInstallerException
     {
-        return invoke( object.getClass(), object, method );
+        return (T) invoke( object.getClass(), object, method );
     }
 
-    public static Object invoke( Class<?> objectClazz, Object object, String method )
+    public static <T> T invoke( Class<?> objectClazz, Object object, String method )
         throws ArtifactInstallerException
     {
         try
         {
-            return objectClazz.getMethod( method ).invoke( object );
+            return (T) objectClazz.getMethod( method ).invoke( object );
         }
         catch ( IllegalAccessException e )
         {
@@ -60,34 +60,12 @@ final class Invoker
         }
     }
 
-    public static Object invoke( Object object, String method, Class<?> argClazz, Object arg )
+    public static <T> T invoke( Class<?> objectClazz, String staticMethod, Class<?> argClazz, Object arg )
         throws ArtifactInstallerException
     {
         try
         {
-            final Class<?> objectClazz = object.getClass();
-            return objectClazz.getMethod( method, argClazz ).invoke( object, arg );
-        }
-        catch ( IllegalAccessException e )
-        {
-            throw new ArtifactInstallerException( e.getMessage(), e );
-        }
-        catch ( InvocationTargetException e )
-        {
-            throw new ArtifactInstallerException( e.getMessage(), e );
-        }
-        catch ( NoSuchMethodException e )
-        {
-            throw new ArtifactInstallerException( e.getMessage(), e );
-        }
-    }
-
-    public static Object invoke( Class<?> objectClazz, String staticMethod, Class<?> argClazz, Object arg )
-        throws ArtifactInstallerException
-    {
-        try
-        {
-            return objectClazz.getMethod( staticMethod, argClazz ).invoke( null, arg );
+            return (T) objectClazz.getMethod( staticMethod, argClazz ).invoke( null, arg );
         }
         catch ( IllegalAccessException e )
         {

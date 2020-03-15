@@ -70,10 +70,9 @@ class Maven30DependencyCollector
     public CollectResult collectDependencies( org.apache.maven.model.Dependency root )
         throws DependencyCollectionException
     {
-        ArtifactTypeRegistry typeRegistry =
-                        (ArtifactTypeRegistry) Invoker
-                            .invoke( RepositoryUtils.class, "newArtifactTypeRegistry",
-                                                               ArtifactHandlerManager.class, artifactHandlerManager );
+        ArtifactTypeRegistry typeRegistry = Invoker
+            .invoke( RepositoryUtils.class, "newArtifactTypeRegistry",
+                                               ArtifactHandlerManager.class, artifactHandlerManager );
 
         CollectRequest request = new CollectRequest();
         request.setRoot( toDependency( root, typeRegistry ) );
@@ -113,10 +112,9 @@ class Maven30DependencyCollector
         CollectRequest request = new CollectRequest();
         request.setRoot( new Dependency( aetherArtifact, null ) );
 
-        ArtifactTypeRegistry typeRegistry =
-                        (ArtifactTypeRegistry) Invoker
-                            .invoke( RepositoryUtils.class, "newArtifactTypeRegistry",
-                                                               ArtifactHandlerManager.class, artifactHandlerManager );
+        ArtifactTypeRegistry typeRegistry = Invoker
+            .invoke( RepositoryUtils.class, "newArtifactTypeRegistry",
+                                               ArtifactHandlerManager.class, artifactHandlerManager );
 
         List<Dependency> aetherDependencies = new ArrayList<Dependency>( root.getDependencies().size() );
         for ( org.apache.maven.model.Dependency mavenDependency : root.getDependencies() )
@@ -164,7 +162,7 @@ class Maven30DependencyCollector
 
         Object[] args = new Object[] { mavenDependency, typeRegistry };
 
-        return (Dependency) Invoker
+        return Invoker
             .invoke( RepositoryUtils.class, "toDependency", argClasses, args );
     }
 }

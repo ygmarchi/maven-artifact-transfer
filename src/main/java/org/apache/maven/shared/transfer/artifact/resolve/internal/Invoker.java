@@ -33,40 +33,18 @@ final class Invoker
         // do not instantiate
     }
 
-    public static Object invoke( Object object, String method )
+    public static <T> T invoke( Object object, String method )
         throws ArtifactResolverException
     {
-        return invoke( object.getClass(), object, method );
+        return (T) invoke( object.getClass(), object, method );
     }
 
-    public static Object invoke( Class<?> objectClazz, Object object, String method )
+    public static <T> T invoke( Class<?> objectClazz, Object object, String method )
         throws ArtifactResolverException
     {
         try
         {
-            return objectClazz.getMethod( method ).invoke( object );
-        }
-        catch ( IllegalAccessException e )
-        {
-            throw new ArtifactResolverException( e.getMessage(), e );
-        }
-        catch ( InvocationTargetException e )
-        {
-            throw new ArtifactResolverException( e.getMessage(), e );
-        }
-        catch ( NoSuchMethodException e )
-        {
-            throw new ArtifactResolverException( e.getMessage(), e );
-        }
-    }
-
-    public static Object invoke( Object object, String method, Class<?> argClazz, Object arg )
-        throws ArtifactResolverException
-    {
-        try
-        {
-            final Class<?> objectClazz = object.getClass();
-            return objectClazz.getMethod( method, argClazz ).invoke( object, arg );
+            return (T) objectClazz.getMethod( method ).invoke( object );
         }
         catch ( IllegalAccessException e )
         {

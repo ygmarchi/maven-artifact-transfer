@@ -164,14 +164,12 @@ class DefaultDependencyResolver
             org.eclipse.aether.RepositorySystem m31RepositorySystem =
                 container.lookup( org.eclipse.aether.RepositorySystem.class );
 
-            org.eclipse.aether.RepositorySystemSession session =
-                (org.eclipse.aether.RepositorySystemSession) Invoker.invoke( buildingRequest, "getRepositorySession" );
+            org.eclipse.aether.RepositorySystemSession session = Invoker.invoke( buildingRequest, "getRepositorySession" );
 
-            List<org.eclipse.aether.repository.RemoteRepository> aetherRepositories =
-                (List<org.eclipse.aether.repository.RemoteRepository>) Invoker.invoke( RepositoryUtils.class, 
-                                                                           "toRepos",
-                                                                           List.class,
-                                                                           buildingRequest.getRemoteRepositories() );
+            List<org.eclipse.aether.repository.RemoteRepository> aetherRepositories = Invoker.invoke( RepositoryUtils.class,
+                                                                       "toRepos",
+                                                                       List.class,
+                                                                       buildingRequest.getRemoteRepositories() );
 
             return new Maven31DependencyResolver( m31RepositorySystem, artifactHandlerManager, session,
                                                   aetherRepositories );

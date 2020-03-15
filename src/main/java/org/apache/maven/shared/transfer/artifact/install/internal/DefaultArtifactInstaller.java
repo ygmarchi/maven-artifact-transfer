@@ -148,8 +148,7 @@ class DefaultArtifactInstaller
             org.eclipse.aether.RepositorySystem repositorySystem =
                             container.lookup( org.eclipse.aether.RepositorySystem.class );
             
-            org.eclipse.aether.RepositorySystemSession session =
-                (org.eclipse.aether.RepositorySystemSession) Invoker.invoke( buildingRequest, "getRepositorySession" );
+            org.eclipse.aether.RepositorySystemSession session = Invoker.invoke( buildingRequest, "getRepositorySession" );
 
             return new Maven31ArtifactInstaller( repositorySystem, session );
         }
@@ -158,8 +157,7 @@ class DefaultArtifactInstaller
             org.sonatype.aether.RepositorySystem repositorySystem =
                             container.lookup( org.sonatype.aether.RepositorySystem.class );
             
-            org.sonatype.aether.RepositorySystemSession session =
-                (org.sonatype.aether.RepositorySystemSession) Invoker.invoke( buildingRequest, "getRepositorySession" );
+            org.sonatype.aether.RepositorySystemSession session = Invoker.invoke( buildingRequest, "getRepositorySession" );
 
             return new Maven30ArtifactInstaller( repositorySystem, session );
         }

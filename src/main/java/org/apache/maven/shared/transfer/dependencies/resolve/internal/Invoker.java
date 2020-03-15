@@ -39,12 +39,12 @@ final class Invoker
         return (T) invoke( object.getClass(), object, method );
     }
 
-    public static Object invoke( Class<?> objectClazz, Object object, String method )
+    public static <T> T invoke( Class<?> objectClazz, Object object, String method )
         throws DependencyResolverException
     {
         try
         {
-            return objectClazz.getMethod( method ).invoke( object );
+            return (T) objectClazz.getMethod( method ).invoke( object );
         }
         catch ( IllegalAccessException e )
         {

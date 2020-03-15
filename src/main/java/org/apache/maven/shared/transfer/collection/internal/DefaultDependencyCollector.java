@@ -164,14 +164,11 @@ class DefaultDependencyCollector implements DependencyCollector, Contextualizabl
       org.eclipse.aether.RepositorySystem m31RepositorySystem =
           container.lookup( org.eclipse.aether.RepositorySystem.class );
 
-      org.eclipse.aether.RepositorySystemSession session =
-          (org.eclipse.aether.RepositorySystemSession) Invoker.invoke( buildingRequest, "getRepositorySession" );
+      org.eclipse.aether.RepositorySystemSession session = Invoker.invoke( buildingRequest, "getRepositorySession" );
 
-      @SuppressWarnings( "unchecked" )
-      List<org.eclipse.aether.repository.RemoteRepository> aetherRepositories =
-          (List<org.eclipse.aether.repository.RemoteRepository>) Invoker.invoke( RepositoryUtils.class, "toRepos",
-              List.class,
-              buildingRequest.getRemoteRepositories() );
+      List<org.eclipse.aether.repository.RemoteRepository> aetherRepositories = Invoker.invoke( RepositoryUtils.class, "toRepos",
+          List.class,
+          buildingRequest.getRemoteRepositories() );
 
       return new Maven31DependencyCollector( m31RepositorySystem, artifactHandlerManager, session,
           aetherRepositories );
@@ -181,14 +178,11 @@ class DefaultDependencyCollector implements DependencyCollector, Contextualizabl
       org.sonatype.aether.RepositorySystem m30RepositorySystem =
           container.lookup( org.sonatype.aether.RepositorySystem.class );
 
-      org.sonatype.aether.RepositorySystemSession session =
-          (org.sonatype.aether.RepositorySystemSession) Invoker.invoke( buildingRequest, "getRepositorySession" );
+      org.sonatype.aether.RepositorySystemSession session = Invoker.invoke( buildingRequest, "getRepositorySession" );
 
-      @SuppressWarnings( "unchecked" )
-      List<org.sonatype.aether.repository.RemoteRepository> aetherRepositories =
-          ( List<org.sonatype.aether.repository.RemoteRepository> ) Invoker.invoke( RepositoryUtils.class,
-              "toRepos", List.class,
-              buildingRequest.getRemoteRepositories() );
+      List<org.sonatype.aether.repository.RemoteRepository> aetherRepositories = Invoker.invoke( RepositoryUtils.class,
+          "toRepos", List.class,
+          buildingRequest.getRemoteRepositories() );
 
       return new Maven30DependencyCollector( m30RepositorySystem, artifactHandlerManager, session,
           aetherRepositories );

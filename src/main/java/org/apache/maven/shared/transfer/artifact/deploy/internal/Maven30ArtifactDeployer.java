@@ -78,9 +78,8 @@ class Maven30ArtifactDeployer
         // transform artifacts
         for ( org.apache.maven.artifact.Artifact mavenArtifact : mavenArtifacts )
         {
-            Artifact aetherArtifact =
-                (Artifact) Invoker.invoke( RepositoryUtils.class, "toArtifact",
-                                           org.apache.maven.artifact.Artifact.class, mavenArtifact );
+            Artifact aetherArtifact = Invoker.invoke( RepositoryUtils.class, "toArtifact",
+                                       org.apache.maven.artifact.Artifact.class, mavenArtifact );
             request.addArtifact( aetherArtifact );
 
             RemoteRepository aetherRepository;
@@ -133,7 +132,7 @@ class Maven30ArtifactDeployer
         throws ArtifactDeployerException
     {
         // CHECKSTYLE_OFF: LineLength
-        RemoteRepository aetherRepo = (RemoteRepository) Invoker.invoke( RepositoryUtils.class, "toRepo",
+        RemoteRepository aetherRepo = Invoker.invoke( RepositoryUtils.class, "toRepo",
                                                                          ArtifactRepository.class,
                                                                          remoteRepository );
         // CHECKSTYLE_ON: LineLength
