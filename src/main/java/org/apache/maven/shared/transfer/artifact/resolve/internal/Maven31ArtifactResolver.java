@@ -61,7 +61,7 @@ class Maven31ArtifactResolver
                                                                                         throws ArtifactResolverException
     // CHECKSTYLE_ON: LineLength
     {
-        Artifact aetherArtifact = (Artifact) Invoker.invoke( RepositoryUtils.class, "toArtifact",
+        Artifact aetherArtifact = Invoker.invoke( RepositoryUtils.class, "toArtifact",
                                                              org.apache.maven.artifact.Artifact.class, mavenArtifact );
 
         return resolveArtifact( aetherArtifact );

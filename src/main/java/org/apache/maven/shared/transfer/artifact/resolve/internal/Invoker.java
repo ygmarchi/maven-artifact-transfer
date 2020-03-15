@@ -82,12 +82,12 @@ final class Invoker
         }
     }
 
-    public static Object invoke( Class<?> objectClazz, String staticMethod, Class<?> argClazz, Object arg )
+    public static <T> T invoke( Class<?> objectClazz, String staticMethod, Class<?> argClazz, Object arg )
         throws ArtifactResolverException
     {
         try
         {
-            return objectClazz.getMethod( staticMethod, argClazz ).invoke( null, arg );
+            return (T) objectClazz.getMethod( staticMethod, argClazz ).invoke( null, arg );
         }
         catch ( IllegalAccessException e )
         {
