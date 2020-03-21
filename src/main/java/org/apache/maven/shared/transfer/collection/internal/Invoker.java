@@ -20,6 +20,7 @@ package org.apache.maven.shared.transfer.collection.internal;
  */
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.apache.maven.shared.transfer.dependencies.collect.DependencyCollectorException;
 import org.apache.maven.shared.transfer.collection.DependencyCollectionException;
@@ -69,7 +70,10 @@ final class Invoker
     {
         try
         {
-            return (T) objectClazz.getMethod( staticMethod, argClazz ).invoke( null, arg );
+            Method method = objectClazz.getMethod( staticMethod, argClazz );
+            @SuppressWarnings( "unchecked" )
+            T invoke = (T) method.invoke( null, arg );
+            return invoke;
         }
         catch ( IllegalAccessException e )
         {
@@ -100,7 +104,9 @@ final class Invoker
     {
         try
         {
-            return (T) objectClazz.getMethod( staticMethod, argClasses ).invoke( null, args );
+            @SuppressWarnings( "unchecked" )
+            T invoke = (T) objectClazz.getMethod( staticMethod, argClasses ).invoke( null, args );
+            return invoke;
         }
         catch ( IllegalAccessException e )
         {

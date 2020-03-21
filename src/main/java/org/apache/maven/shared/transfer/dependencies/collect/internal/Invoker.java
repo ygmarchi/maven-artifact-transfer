@@ -36,7 +36,8 @@ final class Invoker
     public static <T> T invoke( Object object, String method )
         throws DependencyCollectorException
     {
-        return (T) invoke( object.getClass(), object, method );
+        T invoke = invoke( object.getClass(), object, method );
+        return (T) invoke;
     }
 
     public static <T> T invoke( Class<?> objectClazz, Object object, String method )
@@ -44,7 +45,9 @@ final class Invoker
     {
         try
         {
-            return (T) objectClazz.getMethod( method ).invoke( object );
+            @SuppressWarnings( "unchecked" )
+            T invoke = (T) objectClazz.getMethod( method ).invoke( object );
+            return invoke;
         }
         catch ( IllegalAccessException e )
         {
@@ -134,32 +137,4 @@ final class Invoker
         }
     }
 
-    public static Object newInstance( Class<?> objectClazz, Class<?> argClazz, Object arg )
-        throws DependencyCollectorException
-    {
-        try
-        {
-            return objectClazz.getConstructor( argClazz ).newInstance( arg );
-        }
-        catch ( InstantiationException e )
-        {
-            throw new DependencyCollectorException( e.getMessage(), e );
-        }
-        catch ( IllegalAccessException e )
-        {
-            throw new DependencyCollectorException( e.getMessage(), e );
-        }
-        catch ( IllegalArgumentException e )
-        {
-            throw new DependencyCollectorException( e.getMessage(), e );
-        }
-        catch ( InvocationTargetException e )
-        {
-            throw new DependencyCollectorException( e.getMessage(), e );
-        }
-        catch ( NoSuchMethodException e )
-        {
-            throw new DependencyCollectorException( e.getMessage(), e );
-        }
-    }
 }

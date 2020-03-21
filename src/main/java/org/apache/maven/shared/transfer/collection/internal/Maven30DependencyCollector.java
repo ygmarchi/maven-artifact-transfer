@@ -26,10 +26,10 @@ import org.apache.maven.RepositoryUtils;
 import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
 import org.apache.maven.model.Model;
-import org.apache.maven.shared.transfer.dependencies.DependableCoordinate;
 import org.apache.maven.shared.transfer.collection.CollectResult;
 import org.apache.maven.shared.transfer.collection.DependencyCollectionException;
 import org.apache.maven.shared.transfer.collection.DependencyCollector;
+import org.apache.maven.shared.transfer.dependencies.DependableCoordinate;
 import org.sonatype.aether.RepositorySystem;
 import org.sonatype.aether.RepositorySystemSession;
 import org.sonatype.aether.artifact.Artifact;
@@ -162,7 +162,6 @@ class Maven30DependencyCollector
 
         Object[] args = new Object[] { mavenDependency, typeRegistry };
 
-        return Invoker
-            .invoke( RepositoryUtils.class, "toDependency", argClasses, args );
+        return Invoker.invoke( RepositoryUtils.class, "toDependency", argClasses, args );
     }
 }
